@@ -1,0 +1,944 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Shinedoor Admin Dashboard</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #050505;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        .navbar {
+            height: 70px;
+            background: #0d0d0d;
+            border-bottom: 1px solid #222;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 35px;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+        .admin-text {
+            color: #777;
+            font-size: 14px;
+            margin-left: 10px;
+        }
+
+        .logout {
+            color: white;
+            text-decoration: none;
+
+            border: 1px solid #444;
+            padding: 9px 18px;
+
+            border-radius: 25px;
+
+            transition: 0.3s;
+        }
+
+        .logout:hover {
+            background: white;
+            color: black;
+        }
+
+
+        /* =========================
+           MAIN CONTAINER
+        ========================= */
+
+        .container {
+            padding: 40px;
+            max-width: 1500px;
+            margin: auto;
+        }
+
+        .page-title {
+            margin-bottom: 30px;
+        }
+
+        .page-title h1 {
+            margin: 0;
+            font-size: 35px;
+        }
+
+        .page-title p {
+            color: #777;
+            margin-top: 8px;
+        }
+
+
+        /* =========================
+           STAT CARDS
+        ========================= */
+
+        .stats {
+            display: grid;
+
+            grid-template-columns:
+                repeat(5, 1fr);
+
+            gap: 18px;
+
+            margin-bottom: 35px;
+        }
+
+        .stat-card {
+            background: #111;
+
+            border: 1px solid #222;
+
+            border-radius: 16px;
+
+            padding: 25px;
+
+            transition: 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            border-color: #444;
+        }
+
+        .stat-title {
+            color: #777;
+            font-size: 14px;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: 800;
+
+            margin-top: 10px;
+        }
+
+
+        /* =========================
+           SEARCH
+        ========================= */
+
+        .tools {
+            background: #111;
+
+            border: 1px solid #222;
+
+            border-radius: 16px;
+
+            padding: 20px;
+
+            margin-bottom: 25px;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .search-input,
+        .status-select {
+
+            background: #050505;
+
+            color: white;
+
+            border: 1px solid #333;
+
+            padding: 12px 15px;
+
+            border-radius: 9px;
+
+            outline: none;
+        }
+
+        .search-input {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .status-select {
+            min-width: 180px;
+        }
+
+        .search-btn {
+
+            background: white;
+            color: black;
+
+            border: none;
+
+            padding: 12px 22px;
+
+            border-radius: 25px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .clear-btn {
+
+            color: white;
+
+            text-decoration: none;
+
+            border: 1px solid #444;
+
+            padding: 11px 20px;
+
+            border-radius: 25px;
+        }
+
+
+        /* =========================
+           TABLE
+        ========================= */
+
+        .table-box {
+
+            background: #111;
+
+            border: 1px solid #222;
+
+            border-radius: 16px;
+
+            overflow: hidden;
+        }
+
+        .table-header {
+
+            padding: 22px;
+
+            border-bottom: 1px solid #222;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+        }
+
+        .table-header h2 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        .booking-count {
+            color: #777;
+            font-size: 14px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            min-width: 1250px;
+
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+
+            padding: 16px;
+
+            text-align: left;
+
+            border-bottom: 1px solid #222;
+        }
+
+        th {
+
+            color: #777;
+
+            font-size: 13px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            color: #ddd;
+            font-size: 14px;
+        }
+
+        tr:hover {
+            background: #151515;
+        }
+
+
+        /* =========================
+           CUSTOMER
+        ========================= */
+
+        .customer-name {
+            color: white;
+            font-weight: bold;
+        }
+
+        .phone {
+            color: #888;
+            margin-top: 5px;
+        }
+
+
+        /* =========================
+           SERVICE
+        ========================= */
+
+        .service {
+            color: white;
+            font-weight: bold;
+        }
+
+        .car {
+            color: #888;
+            margin-top: 5px;
+        }
+
+
+        /* =========================
+           STATUS
+        ========================= */
+
+        .status-form {
+            display: flex;
+            gap: 7px;
+            align-items: center;
+        }
+
+        .status-form select {
+
+            background: #050505;
+
+            color: white;
+
+            border: 1px solid #444;
+
+            padding: 8px;
+
+            border-radius: 7px;
+        }
+
+        .update-btn {
+
+            background: white;
+
+            color: black;
+
+            border: none;
+
+            padding: 8px 12px;
+
+            border-radius: 18px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+
+        /* =========================
+           WHATSAPP
+        ========================= */
+
+        .whatsapp {
+
+            display: inline-block;
+
+            margin-top: 7px;
+
+            color: #aaa;
+
+            text-decoration: none;
+
+            font-size: 13px;
+        }
+
+        .whatsapp:hover {
+            color: white;
+        }
+
+
+        /* =========================
+           EMPTY
+        ========================= */
+
+        .empty {
+
+            text-align: center;
+
+            padding: 60px 20px;
+
+            color: #666;
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 1000px) {
+
+            .stats {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                padding: 0 18px;
+            }
+
+            .admin-text {
+                display: none;
+            }
+
+            .container {
+                padding: 25px 15px;
+            }
+
+            .page-title h1 {
+                font-size: 28px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .search-form {
+                flex-direction: column;
+            }
+
+            .search-input,
+            .status-select,
+            .search-btn,
+            .clear-btn {
+                width: 100%;
+                text-align: center;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
+<nav class="navbar">
+
+    <div>
+
+        <span class="logo">
+            SHINEDOOR
+        </span>
+
+        <span class="admin-text">
+            ADMIN DASHBOARD
+        </span>
+
+    </div>
+
+
+    <a
+        href="/admin/logout"
+        class="logout"
+    >
+        Logout
+    </a>
+
+</nav>
+
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<div class="container">
+
+
+    <!-- PAGE TITLE -->
+
+    <div class="page-title">
+
+        <h1>
+            Booking Dashboard
+        </h1>
+
+        <p>
+            Manage Shinedoor customer bookings
+        </p>
+
+    </div>
+
+
+
+    <!-- =========================
+         STATISTICS
+    ========================= -->
+
+    <div class="stats">
+
+
+        <div class="stat-card">
+
+            <div class="stat-title">
+                Total Bookings
+            </div>
+
+            <div class="stat-number">
+                {{ total }}
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-title">
+                Pending
+            </div>
+
+            <div class="stat-number">
+                {{ pending }}
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-title">
+                Confirmed
+            </div>
+
+            <div class="stat-number">
+                {{ confirmed }}
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-title">
+                Completed
+            </div>
+
+            <div class="stat-number">
+                {{ completed }}
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-title">
+                Cancelled
+            </div>
+
+            <div class="stat-number">
+                {{ cancelled }}
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================
+         SEARCH + FILTER
+    ========================= -->
+
+    <div class="tools">
+
+        <form
+            method="GET"
+            action="/admin"
+            class="search-form"
+        >
+
+            <input
+                type="text"
+                name="search"
+                class="search-input"
+                placeholder="Search customer, phone, car or service..."
+                value="{{ search }}"
+            >
+
+
+            <select
+                name="status"
+                class="status-select"
+            >
+
+                <option value="">
+                    All Status
+                </option>
+
+                <option
+                    value="Pending"
+                    {% if status == "Pending" %}selected{% endif %}
+                >
+                    Pending
+                </option>
+
+                <option
+                    value="Confirmed"
+                    {% if status == "Confirmed" %}selected{% endif %}
+                >
+                    Confirmed
+                </option>
+
+                <option
+                    value="Completed"
+                    {% if status == "Completed" %}selected{% endif %}
+                >
+                    Completed
+                </option>
+
+                <option
+                    value="Cancelled"
+                    {% if status == "Cancelled" %}selected{% endif %}
+                >
+                    Cancelled
+                </option>
+
+            </select>
+
+
+            <button
+                type="submit"
+                class="search-btn"
+            >
+                Search
+            </button>
+
+
+            <a
+                href="/admin"
+                class="clear-btn"
+            >
+                Clear
+            </a>
+
+        </form>
+
+    </div>
+
+
+
+    <!-- =========================
+         BOOKINGS TABLE
+    ========================= -->
+
+    <div class="table-box">
+
+
+        <div class="table-header">
+
+            <h2>
+                Customer Bookings
+            </h2>
+
+            <span class="booking-count">
+                {{ bookings|length }} result(s)
+            </span>
+
+        </div>
+
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            ID
+                        </th>
+
+                        <th>
+                            Customer
+                        </th>
+
+                        <th>
+                            Car
+                        </th>
+
+                        <th>
+                            Service
+                        </th>
+
+                        <th>
+                            Address
+                        </th>
+
+                        <th>
+                            Date
+                        </th>
+
+                        <th>
+                            Time
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                {% for booking in bookings %}
+
+
+                    <tr>
+
+
+                        <!-- ID -->
+
+                        <td>
+
+                            #{{ booking["id"] }}
+
+                        </td>
+
+
+
+                        <!-- CUSTOMER -->
+
+                        <td>
+
+                            <div class="customer-name">
+                                {{ booking["name"] }}
+                            </div>
+
+                            <div class="phone">
+                                {{ booking["phone"] }}
+                            </div>
+
+                            <a
+                                href="https://wa.me/91{{ booking['phone'] }}"
+                                target="_blank"
+                                class="whatsapp"
+                            >
+                                💬 WhatsApp
+                            </a>
+
+                        </td>
+
+
+
+                        <!-- CAR -->
+
+                        <td>
+
+                            <div class="service">
+                                {{ booking["car_model"] }}
+                            </div>
+
+                        </td>
+
+
+
+                        <!-- SERVICE -->
+
+                        <td>
+
+                            <div class="service">
+                                {{ booking["service"] }}
+                            </div>
+
+                        </td>
+
+
+
+                        <!-- ADDRESS -->
+
+                        <td>
+
+                            {{ booking["address"] }}
+
+                        </td>
+
+
+
+                        <!-- DATE -->
+
+                        <td>
+
+                            {{ booking["booking_date"] }}
+
+                        </td>
+
+
+
+                        <!-- TIME -->
+
+                        <td>
+
+                            {{ booking["booking_time"] }}
+
+                        </td>
+
+
+
+                        <!-- STATUS -->
+
+                        <td>
+
+                            <form
+                                method="POST"
+                                action="/admin/update/{{ booking['id'] }}"
+                                class="status-form"
+                            >
+
+
+                                <select name="status">
+
+                                    <option
+                                        value="Pending"
+                                        {% if booking["status"] == "Pending" %}
+                                            selected
+                                        {% endif %}
+                                    >
+                                        Pending
+                                    </option>
+
+
+                                    <option
+                                        value="Confirmed"
+                                        {% if booking["status"] == "Confirmed" %}
+                                            selected
+                                        {% endif %}
+                                    >
+                                        Confirmed
+                                    </option>
+
+
+                                    <option
+                                        value="Completed"
+                                        {% if booking["status"] == "Completed" %}
+                                            selected
+                                        {% endif %}
+                                    >
+                                        Completed
+                                    </option>
+
+
+                                    <option
+                                        value="Cancelled"
+                                        {% if booking["status"] == "Cancelled" %}
+                                            selected
+                                        {% endif %}
+                                    >
+                                        Cancelled
+                                    </option>
+
+                                </select>
+
+
+                                <button
+                                    type="submit"
+                                    class="update-btn"
+                                >
+                                    Update
+                                </button>
+
+
+                            </form>
+
+                        </td>
+
+
+                    </tr>
+
+
+                {% else %}
+
+
+                    <tr>
+
+                        <td
+                            colspan="8"
+                            class="empty"
+                        >
+
+                            No bookings found.
+
+                        </td>
+
+                    </tr>
+
+
+                {% endfor %}
+
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>
+```
